@@ -1,0 +1,22 @@
+<?xml version="1.0" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Acl/etc/acl.xsd">
+    <acl>
+        <resources>
+            <resource id="Magento_Backend::admin">
+                <resource id="Magento_Backend::stores">
+                    <resource id="Magento_Backend::stores_settings">
+                        <resource id="Magento_Config::config">
+                            <resource id="Laurensmedia_Productdesigner::config_laurensmedia_productdesigner"
+                                      title="lm_productdesigner"/>
+                        </resource>
+                    </resource>
+                </resource>
+                <resource id="Laurensmedia_Productdesigner::bulkexport" title="Bulk Export" sortOrder="10">
+                    <resource id="Laurensmedia_Productdesigner::bulkexport_delete" title="Delete Items"/>
+                    <resource id="Laurensmedia_Productdesigner::bulkexport_add" title="Add Items"/>
+                </resource>
+            </resource>
+        </resources>
+    </acl>
+</config>

@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="2columns-right" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <head>
+		<css src="Laurensmedia_Productdesigner::css/FancyProductDesigner-all.min.css"/>
+		<css src="Laurensmedia_Productdesigner::css/custom.css"/>
+
+<!--         <script src="Laurensmedia_Productdesigner::js/jquery-ui.min.js"/> -->
+<!--
+        <script src="Laurensmedia_Productdesigner::js/fabric.min.js"/>
+        <script src="Laurensmedia_Productdesigner::js/FancyProductDesigner-all.js"/>
+-->
+        <script src="Laurensmedia_Productdesigner::js/designer.js"/>
+    </head>
+	<body>
+		<referenceContainer name="content">
+			<block 
+			    class="Laurensmedia\Productdesigner\Block\Index" 
+			    name="productdesigner" 
+			    template="Laurensmedia_Productdesigner::index.phtml"
+				cacheable="false">
+				<block class="Laurensmedia\Productdesigner\Block\Designer" name="tools_font" template="Laurensmedia_Productdesigner::tools_font.phtml" />
+				<block class="Laurensmedia\Productdesigner\Block\Designer" name="font_editor" template="Laurensmedia_Productdesigner::font_editor.phtml" />
+				<block class="Laurensmedia\Productdesigner\Block\Designer" name="library" template="Laurensmedia_Productdesigner::library.phtml" />
+			</block>
+			<block 
+				class="Laurensmedia\Productdesigner\Block\Index" 
+				name="productdesigner_button" 
+				template="Laurensmedia_Productdesigner::button.phtml"
+				before="-"
+				cacheable="false">
+			</block>
+		</referenceContainer>
+	</body>
+</page>

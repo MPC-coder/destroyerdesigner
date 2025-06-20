@@ -1,0 +1,222 @@
+<button id="addbutton" type="button" class="scalable"><span>Add side</span></button>
+<br /><br />
+<div id="sideslijst">
+
+<?php
+	$id = $this->getRequest()->getParam('id');
+	$tel = "1";
+	if($id > 0){
+		$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+		$fileSystem = $objectManager->create('\Magento\Framework\Filesystem');
+		$mediaPath = $fileSystem->getDirectoryRead(\Magento\Framework\App\Filesystem\DirectoryList::MEDIA)->getAbsolutePath();
+		$mediaUrl = $objectManager->create('\Magento\Store\Model\StoreManagerInterface')->getStore()->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA);
+		$sides = $objectManager->create('Laurensmedia\Productdesigner\Model\ResourceModel\Products\Collection')
+			->addFieldToFilter('product_id', $id);
+		$sides->load();
+		foreach($sides as $side){
+			$backgroundimagename = $side['image'];
+			$backgroundimageurl = $mediaUrl . "productdesigner/sideimages/" . $side['image'];
+			$checkImage = $mediaPath.'productdesigner/sideimages/'.$side['image'];
+			if(!file_exists($checkImage)){
+				$backgroundimageurl = $mediaUrl . "productdesigner/sideimages_m1/" . $side['image'];
+			}
+			$overlayimagename = $side['overlayimage'];
+			$overlayimageurl = $mediaUrl . "productdesigner/overlayimgs/" . $side['overlayimage'];
+			$checkImage = $mediaPath.'productdesigner/overlayimgs/'.$side['overlayimage'];
+			if(!file_exists($checkImage)){
+				$overlayimageurl = $mediaUrl . "productdesigner/overlayimgs_m1/" . $side['overlayimage'];
+			}
+			$surcharge = $side['surcharge'];
+			$surchargeTable = $side['surcharge_table'];
+			echo "<input type=\"hidden\" name=\"imgurl_$tel\" value=\"$backgroundimagename\" />";
+			echo "<input type=\"hidden\" name=\"overlayimgurl_$tel\" value=\"$overlayimagename\" />";
+			echo "<div id=\"sideitem_$tel\">";
+			echo "Title: <input type=\"text\" name=\"side[$tel][label]\" value=\"" . str_replace('_', ' ', $side['label']) . "\" />";
+			echo "<br />";
+	
+			echo " Upload background image: <input type=\"file\" name=\"side[$tel][image]\" />";
+			echo " <img src=\"$backgroundimageurl\" width=\"25\" height=\"25\" />";
+			echo "<br />";
+	
+			echo " Upload overlay image (keep empty for auto-generation): <input type=\"file\" name=\"side[$tel][overlay]\" />";
+			echo " <img src=\"$overlayimageurl\" width=\"25\" height=\"25\" />";
+			echo "<br />";
+	
+			if($side['use_overlay'] == '1'){ $selected = 'selected=selected'; } else { $selected = '';}
+			echo '<label for="side['.$tel.'][useoverlay]">Use overlay image instead of printing area?</label>';
+			echo '<select name="side['.$tel.'][useoverlay]">';
+			echo '<option value="0">No</option>';
+			echo '<option value="1" '.$selected.'>Yes</option>';
+			echo '</select>';
+			echo "<br />";
+
+			echo '<label for="side['.$tel.'][deleteimages]">Delete images?</label>';
+			echo '<select name="side['.$tel.'][deleteimages]">';
+			echo '<option value="">No</option>';
+			echo '<option value="both">Both overlay and background image</option>';
+			echo '<option value="background">Background image</option>';
+			echo '<option value="overlay">Overlay image</option>';
+			echo '</select>';
+			echo "<br />";
+	
+			echo " Surcharge: <input type=\"text\" name=\"side[$tel][surcharge]\" value=\"$surcharge\" /><br />";
+			echo '<table class="surcharge-table">';
+			echo "<input type=\"hidden\" class='surcharge_current' value='$surchargeTable' /><br />";
+			echo '<thead><tr><th>Qty</th><th>Surcharge</th><th></th></tr></thead>';
+			echo '<tbody><tr><td><input type="text" name="surchargeQty['.$tel.'][]" class="surcharge-qty" /></td><td><input type="text" name="surchargePrice['.$tel.'][]" class="surcharge-price" /></td><td><button type="button" class="scalable delete deletesurcharge"><span>Delete</span></button></td></tr></tbody>';
+			echo '</table>';
+			echo " <button id=\"surcharge_$tel\" type=\"button\" class=\"scalable add addsurcharge\"><span>Add surcharge tier</span></button>";
+			echo "<br /><br />";
+	
+			echo " <button id=\"del_$tel\" type=\"button\" class=\"scalable delete deleteside\"><span>Delete</span></button>";
+			echo "<br /><br />";
+			echo "<hr />";
+			echo "<br />";
+			$tel++;
+			
+			$label = $side['label'];
+			$imgname = $side['image'];
+			$imageurl = $mediaUrl. "productdesigner/sideimages/".$imgname;
+			$checkImage = $mediaPath.'productdesigner/sideimages/'.$imgname;
+			if(!file_exists($checkImage)){
+				$imageurl = $mediaUrl . "productdesigner/sideimages_m1/" . $imgname;
+			}
+	
+			$overlayimgname = $side['overlayimage'];
+			$overlayimageurl = $mediaUrl. "productdesigner/overlayimgs/".$overlayimgname;
+			$checkImage = $mediaPath.'productdesigner/overlayimgs/'.$overlayimgname;
+			if(!file_exists($checkImage)){
+				$overlayimageurl = $mediaUrl . "productdesigner/overlayimgs_m1/" . $overlayimgname;
+			}
+			?>
+			<div id="selectdrop_<?php echo $label ?>" class="chan" style="float:left;clear:both;width:412px; position: relative;">
+				<img id="<?php echo $label ?>" src="<?php echo $imageurl; ?>" style="width: 412px; height: auto; float:left; margin-right: 140px; border:1px solid black;" />
+			</div>
+			<div style="clear:both;"></div>
+			
+			<input type="hidden" id="<?php echo $side->getId();  ?>" name="<?php echo $label; ?>" value="0" />
+			<input type="hidden" id="label" name="<?php echo $label; ?>" value="<?php echo $label ?>" />
+			<input type="hidden" id="x1" name="<?php echo $label;  ?>_x1" value="<?php echo $side['x1'] ?>" />
+			<input type="hidden" id="x2" name="<?php echo $label;  ?>_x2" value="<?php echo $side['x2'] ?>" />
+			<input type="hidden" id="y1" name="<?php echo $label;  ?>_y1" value="<?php echo $side['y1'] ?>" />
+			<input type="hidden" id="y2" name="<?php echo $label;  ?>_y2" value="<?php echo $side['y2'] ?>" />
+			<?php echo 'Ratio (width:height)';?> <input type="text" readonly="true" id="ratio_<?php echo $label;  ?>" /><br />
+			<?php echo 'Output width';?> <input type="text" id="outputwidth_<?php echo $label;  ?>" name="<?php echo $label;  ?>_outputwidth" value="<?php echo $side['outputwidth'] ?>" /> mm<br />
+			<?php echo 'Output height (automatically calculated based on ratio)';?> <input type="text" readonly="true" id="outputheight_<?php echo $label;  ?>" name="<?php echo $label;  ?>_outputheight" value="<?php echo $side['outputheight'] ?>" /> mm
+			</div>
+
+
+
+
+			<script type="text/javascript">
+				require(["jquery"], function ($){
+					$(window).load(function () {
+						
+						if( $("img#<?php echo $label ?>").get(0).complete ) {
+						    imageLoaded.call( $("img#<?php echo $label ?>").get(0) );
+						} else {
+						    $("img#<?php echo $label ?>").one('load', imageLoaded);
+						}
+						
+						function imageLoaded(){
+							var ias = $("img#<?php echo $label ?>").imgAreaSelect({
+								x1: <?php echo $side['x1'] ?>,
+								y1: <?php echo $side['y1'] ?>,
+								x2: <?php echo $side['x2'] ?>,
+								y2: <?php echo $side['y2'] ?>,
+								show: true,
+								handles: true,
+								instance: true,
+								parent: '#selectdrop_<?php echo $label ?>',
+								onInit: function (img, selection) {
+	// 								calculateOutput(img, selection);
+								},
+								onSelectChange: function (img, selection) {
+									calculateOutput(img, selection);
+								}
+							});
+							setTimeout(function(){
+								ias.setSelection(<?php echo $side['x1'] ?>, <?php echo $side['y1'] ?>, <?php echo $side['x2'] ?>, <?php echo $side['y2'] ?>, true);
+								ias.update();
+							}, 2000);
+							ias.setSelection(<?php echo $side['x1'] ?>, <?php echo $side['y1'] ?>, <?php echo $side['x2'] ?>, <?php echo $side['y2'] ?>, true);
+							ias.update();
+						}
+						
+						function calculateOutput(img, selection){
+							if(isNaN(selection.x1)){ return; }
+							$('input[name="<?php echo $label;  ?>_x1"]').val(selection.x1);
+							$('input[name="<?php echo $label;  ?>_x2"]').val(selection.x2);
+							$('input[name="<?php echo $label;  ?>_y1"]').val(selection.y1);
+							$('input[name="<?php echo $label;  ?>_y2"]').val(selection.y2);
+							var width = selection.x2 - selection.x1;
+							var height = selection.y2 - selection.y1;
+							var ratio = "1 : " + (height / width);
+							$('input#ratio_<?php echo $label;  ?>').val(ratio);
+							var outputWidth = $('input#outputwidth_<?php echo $label;  ?>').val();
+							var outputHeight = $('input#outputheight_<?php echo $label;  ?>').val();
+							if(outputWidth < 1 || outputHeight < 1){
+								$('input#outputwidth_<?php echo $label;  ?>').val(500);
+								$('input#outputheight_<?php echo $label;  ?>').val(500*(height/width));
+							} else {
+								$('input#outputheight_<?php echo $label;  ?>').val(outputWidth*(height/width));
+							}
+						}
+						
+						$("input#outputwidth_<?php echo $label;  ?>").bind("keyup change", function(){
+							var x1 = $('input[name="<?php echo $label;  ?>_x1"]').val();
+							var x2 = $('input[name="<?php echo $label;  ?>_x2"]').val();
+							var y1 = $('input[name="<?php echo $label;  ?>_y1"]').val();
+							var y2 = $('input[name="<?php echo $label;  ?>_y2"]').val();
+							var width = x2 - x1;
+							var height = y2 - y1;
+							var outputWidth = $("input#outputwidth_<?php echo $label;  ?>").val();
+							$('input#outputheight_<?php echo $label;  ?>').val(outputWidth*(height/width));
+						});
+
+						jQuery(document).on('click', "button.addsurcharge", function(){
+							var row = $(this).prev('.surcharge-table').find('tbody tr').first();
+							var rowClone = $(row).clone();
+							$(rowClone).find('input').val('');
+							rowClone.insertAfter($(this).prev('.surcharge-table').find('tbody tr').last());
+						});
+						
+						jQuery(document).on('click', "button.deletesurcharge", function(){
+							$(this).closest('tr').remove();
+						});
+						
+						jQuery(".surcharge-table").each(function(index, table){
+							if($(table).find('tbody tr').length == 1){
+								var data = $(table).find('input.surcharge_current').val();
+								if(data != ''){
+									data = JSON.parse(data);
+									var count = 0;
+									$.each(data, function(qty, price){
+										if(qty != ''){
+											if(count == 0){
+												$(table).find('tbody tr td input').first().val(qty);
+												$($(table).find('tbody tr td input')[1]).first().val(price);
+											} else {
+												$(table).next('button.addsurcharge').trigger('click');
+												var inputCount = $(table).find('tbody tr td input').length;
+												$(table).find('tbody tr td input').last().val(price);
+												$($(table).find('tbody tr td input')[inputCount-2]).first().val(qty);
+											}
+											count++;
+										}
+									});
+								}
+							}
+						});
+					
+					});
+				});
+			</script>
+
+
+
+
+			<?php
+		}
+	}
+	echo "<input type=\"hidden\" name=\"sidecounter\" id=\"sidecounter\" value=\"$tel\" />";

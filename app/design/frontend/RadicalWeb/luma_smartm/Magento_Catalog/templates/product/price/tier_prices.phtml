@@ -1,0 +1,62 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+?>
+
+<?php
+// phpcs:disable Magento2.Templates.ThisInTemplate
+// phpcs:disable Generic.WhiteSpace.ScopeIndent
+
+/** @var \Magento\Catalog\Pricing\Render\PriceBox $block */
+/** @var \Magento\Framework\View\Helper\SecureHtmlRenderer $secureRenderer */
+
+/** @var \Magento\Catalog\Pricing\Price\TierPrice $tierPriceModel */
+$tierPriceModel = $block->getPrice();
+$tierPrices = $tierPriceModel->getTierPriceList();
+$msrpShowOnGesture = $block->getPriceType('msrp_price')->isShowPriceOnGesture();
+$product = $block->getSaleableItem();
+?>
+<?php if (count($tierPrices)): ?>
+    <ul class="<?= $block->escapeHtmlAttr(($block->hasListClass() ? $block->getListClass() : 'prices-tier items')) ?>">
+        <?php foreach ($tierPrices as $index => $price): ?>
+	        <li class="item">
+	            <?php
+	                $productId = $product->getId();
+	                $isSaleable = $product->isSaleable();
+				?>
+	            <?php if($index>8) break; ?>
+	            <?php if($index % 2): ?>
+	            <ul class="one">
+	            <li class="sub1"><?php echo $price['price_qty'] ?></li>
+	            <li class="sub2"><?php echo $price['price'] ?></li>
+	            </ul>
+	            <?php else: ?>
+	            <ul class="two">
+	            <li class="sub1"><?php echo $price['price_qty'] ?></li>
+	            <li class="sub2"><?php echo $price['price'] ?></li>
+	            </ul>
+	            <?php endif; ?>  
+	        </li>
+        <?php endforeach; ?>
+    </ul>
+    <?php if ($msrpShowOnGesture):?>
+        <script type="text/x-magento-init">
+            {
+                ".product-info-main": {
+                    "addToCart": {
+                        "origin": "tier",
+                        "addToCartButton": "#product_addtocart_form [type=submit]",
+                        "inputQty": "#qty",
+                        "attr": "[data-tier-price]",
+                        "productForm": "#product_addtocart_form",
+                        "productId": "<?= (int) $productId ?>",
+                        "productIdInput": "input[type=hidden][name=product]",
+                        "isSaleable": "<?= (bool) $isSaleable ?>"
+                    }
+                }
+            }
+        </script>
+    <?php endif;?>
+<?php endif; ?>

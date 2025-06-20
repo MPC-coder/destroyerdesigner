@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+
+
+	<event name="catalog_product_load_after">
+		<observer name="laurensmedia_productdesigner_observer_catalogproductloadafter" instance="Laurensmedia\Productdesigner\Observer\Catalogproductloadafter" />
+	</event>
+
+	<event name="checkout_cart_product_add_after">
+		<observer name="laurensmedia_productdesigner_observer_checkout_cart_product_add_after" instance="Laurensmedia\Productdesigner\Observer\Customprice" />
+		<observer name="laurensmedia_productdesigner_observer_checkout_cart_update_items_after" instance="Laurensmedia\Productdesigner\Observer\Updatecart"/>
+	</event>
+
+    <event name="sales_quote_item_qty_set_after">
+        <observer name="laurensmedia_productdesigner_observer_checkout_cart_update_items_after" instance="Laurensmedia\Productdesigner\Observer\Updatecart"/>
+    </event>
+
+</config>

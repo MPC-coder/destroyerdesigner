@@ -1,0 +1,22 @@
+span.custom-label{
+  float: left;
+  margin: 3px;
+  padding: 3px;
+  border-radius: 5px;
+  clear: both;
+}
+span.custom-label.product-options-label{
+  background: #eee;
+}
+span.custom-label.shipping-label{
+  background: orange;
+}
+span.custom-label ul{
+  margin: 0;
+}
+span.custom-label ul li{
+  margin-left: 20px;
+}
+span.custom-label ul li span{
+  font-weight: bolder;
+}

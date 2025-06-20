@@ -1,0 +1,58 @@
+<?xml version="1.0" ?>
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+	<table engine="innodb" name="prod_design_export_queue" resource="default">
+		<column length="255" name="pdf_file_wood" nullable="true" xsi:type="varchar"/>
+		<column name="store_id" nullable="true" xsi:type="int"/>
+	</table>
+	<table engine="innodb" name="prod_design_droparea" resource="default">
+		<column length="255" name="cutoutsvg" nullable="true" xsi:type="varchar"/>
+		<column name="store_id" nullable="true" xsi:type="int"/>
+	</table>
+	<table engine="innodb" name="prod_design_colorimages" resource="default">
+		<column name="store_id" nullable="true" xsi:type="int"/>
+	</table>
+	<table engine="innodb" name="prod_design_druktype" resource="default">
+		<column name="store_id" nullable="true" xsi:type="int"/>
+	</table>
+	<table engine="innodb" name="prod_design_maat" resource="default">
+		<column name="store_id" nullable="true" xsi:type="int"/>
+	</table>
+	<table engine="innodb" name="prod_design_saved" resource="default">
+		<column name="store_id" nullable="true" xsi:type="int"/>
+		<column xsi:type="varchar" name="label" nullable="false" comment="Label"/>
+		<column name="connect_id" nullable="false" xsi:type="int"/>
+		<index referenceId="PROD_DESIGN_SAVED_LABEL_CONNECT_ID" indexType="btree">
+			<column name="label"/>
+			<column name="connect_id"/>
+		</index>
+		<index referenceId="PROD_DESIGN_SAVED_CONNECT_ID" indexType="btree">
+			<column name="connect_id"/>
+		</index>
+	</table>
+	<table engine="innodb" name="sales_order_grid" resource="default">
+		<column name="custom_info_labels" nullable="true" xsi:type="text"/>
+	</table>
+	<table engine="innodb" name="sales_order" resource="default">
+		<column name="custom_info_labels" nullable="true" xsi:type="text"/>
+	</table>
+	<table name="prod_design_templates" resource="default" engine="innodb" comment="Product Designer templates">    
+		<column xsi:type="varchar" name="title" nullable="true" comment="Title"/>
+		<column xsi:type="varchar" name="password" nullable="true" comment="Password"/>
+	</table>
+	<table name="prod_design_template_data" resource="default" engine="innodb" comment="Product Designer template data">    
+		<column xsi:type="int" identity="true" name="id" nullable="false" comment="ID"/>
+		<column xsi:type="int" name="template_id" nullable="false" comment="Template"/>
+		<column xsi:type="varchar" name="label" nullable="true" comment="Label"/>
+		<column xsi:type="longtext" name="json" nullable="true" comment="JSON"/>
+		<column xsi:type="longtext" name="svg" nullable="true" comment="SVG"/>
+		<constraint xsi:type="primary" referenceId="PRIMARY">
+			<column name="id"/>
+		</constraint>
+	</table>
+	<table name="druk_img_library" resource="default" engine="innodb" comment="Product Designer library images">    
+		<column xsi:type="varchar" name="scale_factor" nullable="true" comment="Scale factor"/>
+	</table>
+	<table name="druk_img_category" resource="default" engine="innodb" comment="Product Designer library image categories">    
+		<column xsi:type="varchar" name="scale_factor" nullable="true" comment="Scale factor"/>
+	</table>
+</schema>

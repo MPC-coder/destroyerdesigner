@@ -1,0 +1,29 @@
+<?php
+$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+$mediaUrl = $objectManager->create('\Magento\Store\Model\StoreManagerInterface')->getStore()->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA);
+$f = $this->getRequest()->getParam('id');
+$maten = $objectManager->create('Laurensmedia\Productdesigner\Model\ResourceModel\Sizes\Collection')
+	->addFieldToFilter('product_id', $f);
+if($this->getRequest()->getParam('store') > 0){
+	$maten->addFieldToFilter('store_id', $this->getRequest()->getParam('store'));
+} else {
+	$maten->addFieldToFilter('store_id', array('null' => true));
+}
+$maten->load();
+?>
+
+<button id="size-addbutton" type="button" class="scalable"><span>Add size</span></button>
+<br /><br />
+<div id="maatlijst">
+
+<?php
+	$tel = "1";
+	foreach($maten as $maat){
+		echo "<div id=\"sizeitem_$tel\">";
+		echo "Title: <input type=\"text\" name=\"maat_$tel\" value=\"" . $maat['name'] . "\" /> Surcharge: <input type=\"text\" name=\"meerprijs_$tel\" value=\"" . $maat['meerprijs'] . "\" />";
+		echo " <button id=\"del_$tel\" type=\"button\" class=\"scalable delete deletemaat\"><span>Delete</span></button>";
+		echo "<br /><br />";
+		echo '</div>';
+		$tel++;
+	}
+	echo "<input type=\"hidden\" name=\"maatcounter\" id=\"maatcounter\" value=\"$tel\" />";

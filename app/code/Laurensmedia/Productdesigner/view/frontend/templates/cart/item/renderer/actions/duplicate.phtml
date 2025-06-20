@@ -1,0 +1,10 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+?>
+<div id="duplicate-cart-item-<?= (int) $block->getItem()->getId() ?>" class="duplicate-options-cart-item">
+    <a class="action action-duplicate" href="<?php echo $block->getUrl('productdesigner/cart/duplicate', array('id' => $block->getItem()->getId())); ?>" title="<?php echo __("Duplicate cart item"); ?>"><span><?php echo __("Duplicate"); ?></span></a>
+</div>

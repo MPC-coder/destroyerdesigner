@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="admin-2columns-left" xsi:noNamespaceSchemaLocation="../../../../../../../lib/internal/Magento/Framework/View/Layout/etc/page_configuration.xsd">
+    <head>
+        <css src="jquery/fileUploader/css/jquery.fileupload-ui.css"/>
+        <css src="Laurensmedia_Productdesigner::css/colorpicker.css"/>
+        <css src="Laurensmedia_Productdesigner::css/productdesigner.css"/>
+        <script src="Laurensmedia_Productdesigner::js/editproduct.js"/>
+    </head>
+    <update handle="editor"/>
+    <body>
+        <referenceContainer name="content">
+            <block class="Laurensmedia\Productdesigner\Block\Adminhtml\Products\Edit" name="productdesigner_products_edit"/>
+        </referenceContainer>
+        <referenceContainer name="left">
+            <block class="Laurensmedia\Productdesigner\Block\Adminhtml\Products\Edit\Tabs" name="productdesigner_products_edit_tabs">
+                <block class="Laurensmedia\Productdesigner\Block\Adminhtml\Products\Edit\Tab\Stores" name="productdesigner_products_edit_tab_stores"/>
+                <block class="Laurensmedia\Productdesigner\Block\Adminhtml\Products\Edit\Tab\Sides" name="productdesigner_products_edit_tab_sides"/>
+                <block class="Laurensmedia\Productdesigner\Block\Adminhtml\Products\Edit\Tab\Sizes" name="productdesigner_products_edit_tab_sizes"/>
+                <block class="Laurensmedia\Productdesigner\Block\Adminhtml\Products\Edit\Tab\Colors" name="productdesigner_products_edit_tab_colors"/>
+                <block class="Laurensmedia\Productdesigner\Block\Adminhtml\Products\Edit\Tab\Printingquality" name="productdesigner_products_edit_tab_printingquality"/>
+                <block class="Laurensmedia\Productdesigner\Block\Adminhtml\Products\Edit\Tab\Groups" name="productdesigner_products_edit_tab_groups"/>
+                <action method="addTab">
+                    <argument name="name" xsi:type="string">store_section</argument>
+                    <argument name="block" xsi:type="string">productdesigner_products_edit_tab_stores</argument>
+                </action>
+                <action method="addTab">
+                    <argument name="name" xsi:type="string">sides_section</argument>
+                    <argument name="block" xsi:type="string">productdesigner_products_edit_tab_sides</argument>
+                </action>
+                <action method="addTab">
+                    <argument name="name" xsi:type="string">sizes_section</argument>
+                    <argument name="block" xsi:type="string">productdesigner_products_edit_tab_sizes</argument>
+                </action>
+                <action method="addTab">
+                    <argument name="name" xsi:type="string">colors_section</argument>
+                    <argument name="block" xsi:type="string">productdesigner_products_edit_tab_colors</argument>
+                </action>
+                <action method="addTab">
+                    <argument name="name" xsi:type="string">printingquality_section</argument>
+                    <argument name="block" xsi:type="string">productdesigner_products_edit_tab_printingquality</argument>
+                </action>
+                <action method="addTab">
+                    <argument name="name" xsi:type="string">groups_section</argument>
+                    <argument name="block" xsi:type="string">productdesigner_products_edit_tab_groups</argument>
+                </action>
+            </block>
+        </referenceContainer>
+    </body>
+</page>

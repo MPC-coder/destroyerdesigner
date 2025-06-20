@@ -1,0 +1,173 @@
+<?php
+$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+$fileSystem = $objectManager->create('\Magento\Framework\Filesystem');
+$mediaPath = $fileSystem->getDirectoryRead(\Magento\Framework\App\Filesystem\DirectoryList::MEDIA)->getAbsolutePath();
+$mediaUrl = $objectManager->create('\Magento\Store\Model\StoreManagerInterface')->getStore()->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA);
+$f = $this->getRequest()->getParam('id');
+$labels = $objectManager->create('Laurensmedia\Productdesigner\Model\ResourceModel\Products\Collection')
+	->addFieldToFilter('product_id', $f);
+if($this->getRequest()->getParam('store') > 0){
+	$labels->addFieldToFilter('store_id', $this->getRequest()->getParam('store'));
+} else {
+	$labels->addFieldToFilter('store_id', array('null' => true));
+}
+$labels->load();
+$kleurarray = array();
+$tel = "1";
+
+
+$counter = $objectManager->create('Laurensmedia\Productdesigner\Model\ResourceModel\Colorimages\Collection')
+	->addFieldToFilter('product_id', $f);
+if($this->getRequest()->getParam('store') > 0){
+	$counter->addFieldToFilter('store_id', $this->getRequest()->getParam('store'));
+} else {
+	$counter->addFieldToFilter('store_id', array('null' => true));
+}
+$counter = $counter->getLastItem();
+$counter = $counter['colorimages_id'];
+
+$allLabels = array();
+foreach($labels as $label){
+	$allLabels[] = $label['label'];
+}
+?>
+
+
+<button id="kleuraddbutton" type="button" class="scalable"><span>Add Color</span></button>
+<br /><br />
+
+<div id="kleurlijst">
+
+<?php
+echo "<input name=\"colorimagescounter\" id=\"colorimagescounter\" type=\"hidden\" value=\"$counter\" />";
+
+foreach($labels as $label){
+
+	$kleuren = $objectManager->create('Laurensmedia\Productdesigner\Model\ResourceModel\Colorimages\Collection')
+		->addFieldToFilter('product_id', $f)
+		->addFieldToFilter('label', $label['label']);
+    if($this->getRequest()->getParam('store') > 0){
+		$kleuren->addFieldToFilter('store_id', $this->getRequest()->getParam('store'));
+	} else {
+		$kleuren->addFieldToFilter('store_id', array('null' => true));
+	}
+	$kleuren->load();
+	$teller = "1";
+	foreach($kleuren as $kleur){
+		$usedLabels = array();
+		if(!in_array($kleur['kleurcode'], $kleurarray)){
+			echo "<div id=\"kleuritem_$tel\" class=\"kleurpicker\" style=\"border:2px solid #aaa;float:left;margin-bottom:15px;margin-right:15px;padding:10px;\">";
+			echo "Color: <input type=\"hidden\" name=\"kleurcode_$tel\" value=\"" . $kleur['kleurcode'] . "\" />".$kleur['kleurcode']."<div style='display:block;width:15px;height:15px;background:".$kleur['kleurcode'].";'></div>";
+			echo "Surcharge: <input type=\"text\" class=\"kleurmeerprijs\" name=\"kleurmeerprijs_$tel\" value=\"" . $kleur['meerprijs'] . "\" />";
+			echo " <button id=\"kleurdel_$tel\" type=\"button\" class=\"scalable delete deletekleur\" onclick=\"deletekleur($tel)\"><span>Delete</span></button> ";
+			echo "<br />";
+	
+			$imgpath = $mediaUrl.'productdesigner/color_img/';
+			
+			$_product = $objectManager->create('Magento\Catalog\Model\Product')->load($f);
+			$colorimages = $objectManager->create('Laurensmedia\Productdesigner\Model\ResourceModel\Colorimages\Collection')
+				->addFieldToFilter('product_id', $f);
+		    if($this->getRequest()->getParam('store') > 0){
+				$colorimages->addFieldToFilter('store_id', $this->getRequest()->getParam('store'));
+			} else {
+				$colorimages->addFieldToFilter('store_id', array('null' => true));
+			}
+			
+			foreach($colorimages as $colorimage2){
+				if(in_array($colorimage2['label'], $allLabels) && !in_array($colorimage2['label'], $usedLabels)){
+					$usedLabels[] = $colorimage2['label'];
+					$colorimage = $objectManager->create('Laurensmedia\Productdesigner\Model\ResourceModel\Colorimages\Collection')
+						->addFieldToFilter('product_id', $f)
+						->addFieldToFilter('kleurcode', $kleur['kleurcode'])
+						->addFieldToFilter('label', $colorimage2['label']);
+				    if($this->getRequest()->getParam('store') > 0){
+						$colorimage->addFieldToFilter('store_id', $this->getRequest()->getParam('store'));
+					} else {
+						$colorimage->addFieldToFilter('store_id', array('null' => true));
+					}
+					$colorimage = $colorimage->getFirstItem();
+					$imageurl = $imgpath . $colorimage['imgurl'];
+					$checkImage = $mediaPath.'productdesigner/color_img/'.$colorimage['imgurl'];
+					if(!file_exists($checkImage)){
+						$imageurl = $mediaUrl . "productdesigner/color_img_m1/" . $colorimage['imgurl'];
+					}
+		
+					echo "<input type=\"hidden\" name=\"color[".$tel."][".$colorimage['label']."][imgurl]\" value=\"" . $colorimage['imgurl'] . "\" />";
+					echo "<input type=\"hidden\" name=\"color[".$tel."][label][]\" value=\"" . $colorimage2['label'] . "\" />";
+					echo '<div class="kleuritem" style="float:left;display:inline;">';
+					echo "<br /><img src=\"" . $imageurl . "\" class=\"kleurafbeelding\" height=\"80px\" />";
+					echo "<p>" . $colorimage2['label'] . "</p>";
+					?>
+					<input name="color[<?php echo $tel;?>][<?php echo $colorimage2['label'];?>][image]" size="27" type="file"><br><br>
+					<?php
+					echo '</div>';
+					$teller++;
+				}
+			}
+	
+	
+			echo "<br /><br />";
+			echo '</div>';
+			$tel++;
+			$kleurarray[] = $kleur['kleurcode'];
+		}
+	}
+	echo "<input type=\"hidden\" name=\"kleurcounter\" id=\"kleurcounter\" value=\"$tel\" />";
+}
+?>
+
+</div>
+
+
+<script type="text/javascript">
+	require(["jquery"], function ($){
+		$(document).ready(function(){
+		
+			$("input.kleurpicker").each(function(){
+				var papa = this;
+				$(this).ColorPicker({ onChange: function(hsb, hex, rgb, el){
+									$(papa).parent("div.kleurpicker").children("input.kleurcode").val("#"+hex);
+									}
+							});
+			});
+		
+			var tel = '<?php echo $tel; ?>';
+			<?php
+				$labelcount = count($labels);
+			?>
+			var labelcount = <?php echo $labelcount; ?>;
+			$("#kleuraddbutton").click(function(){
+				var teller = (+tel * +labelcount);
+				huidigewaarde = $("#colorimagescounter").val();
+				nieuwewaarde = (teller + 1);
+				$("#colorimagescounter").val(nieuwewaarde);
+				var content = ("<div id=\"kleuritem_"+tel+"\" style=\"border:2px solid #aaa;float:left;margin-bottom:15px;margin-right:15px;padding:10px;\">Color: <input type=\"text\" class=\"kleurcode kleurpicker\" name=\"kleurcode_"+tel+"\" value=\"#000000\"> Surcharge: <input type=\"text\" class=\"kleurmeerprijs\" name=\"kleurmeerprijs_"+tel+"\" value=\"0.00\"> <button id=\"kleurdel_"+tel+"\" type=\"button\" class=\"scalable delete deletekleur\" onclick=\"deletekleur("+tel+")\"><span>Delete</span></button> <br /><?php $labelsCount = -1; foreach($labels as $colorimage3){ $labelsCount++; $teller++; ?><div class=\"kleuritem\" style=\"float:left;display:inline;\"><?php echo $colorimage3['label'];?><br /><input name=\"color["+tel+"][<?php echo $colorimage3['label'];?>][image]\" size=\"27\" type=\"file\"><input type=\"hidden\" name=\"color["+tel+"][label][]\" value=\"<?php echo $colorimage3['label'];?>\" /></div><?php } ?></div>");
+				$("#kleurlijst").append(content);
+				$("input.kleurpicker").each(function(){
+					var papa = $(this);
+					$(this).ColorPicker({ onChange: function(hsb, hex, rgb, el){
+										$(papa).val("#"+hex);
+										}
+								});
+				});
+				tel++;
+			});
+			$(".deletekleur").click(function(){
+				var delid = $(this).attr('id');
+				delid = delid.replace('del_', '');
+				$("#kleuritem_"+delid).remove();
+			});
+			$(document).on('change keyup', "input.kleurcode", function(){
+				waarde = $(this).val();
+				$(this).parent("div").children("input.kleurcode").val(waarde);
+			});
+			$(document).on('change keyup', "input.kleurmeerprijs", function(){
+				waarde = $(this).val();
+				$(this).parent("div").children("input.kleurmeerprijs").val(waarde);
+			});
+		});
+		function deletekleur(delid){
+			$("#kleuritem_"+delid).remove();
+		}
+	});
+</script>

@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../Magento/Backend/etc/menu.xsd">
+    <menu>
+        <add id="Laurensmedia_Advancedshipping::parent" title="Advancedshipping" module="Laurensmedia_Advancedshipping" sortOrder="100" resource="Laurensmedia_Advancedshipping::parent" parent="Laurensmedia::top_level"/>
+		<add id="Laurensmedia_Advancedshipping::matrix" title="Matrix" module="Laurensmedia_Advancedshipping" sortOrder="20" parent="Laurensmedia_Advancedshipping::parent" action="advancedshipping/matrix" resource="Laurensmedia_Advancedshipping::matrix"/>
+		<add id="Laurensmedia_Advancedshipping::importcsv" title="Import from CSV" module="Laurensmedia_Advancedshipping" sortOrder="20" parent="Laurensmedia_Advancedshipping::parent" action="advancedshipping/matrix/importcsv" resource="Laurensmedia_Advancedshipping::matrix"/>
+
+    </menu>
+</config>

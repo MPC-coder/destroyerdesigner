@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../Magento/Backend/etc/menu.xsd">
+    <menu>
+        <add id="Laurensmedia_Productdesigner::parent" title="Productdesigner" module="Laurensmedia_Productdesigner" sortOrder="20" resource="Laurensmedia_Productdesigner::parent" parent="Laurensmedia::top_level" />
+		<add id="Laurensmedia_Productdesigner::products" title="Products" module="Laurensmedia_Productdesigner" sortOrder="20" parent="Laurensmedia_Productdesigner::parent" action="productdesigner/products" resource="Laurensmedia_Productdesigner::products"/>
+		<add id="Laurensmedia_Productdesigner::imagecategories" title="Image categories" module="Laurensmedia_Productdesigner" sortOrder="30" parent="Laurensmedia_Productdesigner::parent" action="productdesigner/imagecategories" resource="Laurensmedia_Productdesigner::imagecategories"/>
+		<add id="Laurensmedia_Productdesigner::images" title="Library Images" module="Laurensmedia_Productdesigner" sortOrder="40" parent="Laurensmedia_Productdesigner::parent" action="productdesigner/images" resource="Laurensmedia_Productdesigner::images"/>
+		<add id="Laurensmedia_Productdesigner::fonts" title="Fonts" module="Laurensmedia_Productdesigner" sortOrder="50" parent="Laurensmedia_Productdesigner::parent" action="productdesigner/fonts" resource="Laurensmedia_Productdesigner::fonts"/>
+		<add id="Laurensmedia_Productdesigner::templates" title="Templates" module="Laurensmedia_Productdesigner" sortOrder="70" parent="Laurensmedia_Productdesigner::parent" action="productdesigner/templates" resource="Laurensmedia_Productdesigner::templates"/>
+		<add id="Laurensmedia_Productdesigner::textcolors" title="Text colors" module="Laurensmedia_Productdesigner" sortOrder="20" parent="Laurensmedia_Productdesigner::parent" action="productdesigner/textcolors" resource="Laurensmedia_Productdesigner::textcolors"/>
+		<add id="Laurensmedia_Productdesigner::groups" title="Groups" module="Laurensmedia_Productdesigner" sortOrder="20" parent="Laurensmedia_Productdesigner::parent" action="productdesigner/groups" resource="Laurensmedia_Productdesigner::groups"/>
+		<add id="Laurensmedia_Productdesigner::bulkexportadd" title="Bulk export - add items" module="Laurensmedia_Productdesigner" sortOrder="80" parent="Laurensmedia_Productdesigner::parent" action="productdesigner/bulkexport/new" resource="Laurensmedia_Productdesigner::bulkexportadd"/>
+		<add id="Laurensmedia_Productdesigner::bulkexportrun" title="Bulk export - run" module="Laurensmedia_Productdesigner" sortOrder="90" parent="Laurensmedia_Productdesigner::parent" action="productdesigner/bulkexport" resource="Laurensmedia_Productdesigner::bulkexportrun"/>
+		<add id="Laurensmedia_Productdesigner::cleanup" title="Clean up" module="Laurensmedia_Productdesigner" sortOrder="91" parent="Laurensmedia_Productdesigner::parent" action="productdesigner/cleanup/edit" resource="Laurensmedia_Productdesigner::cleanup"/>
+    </menu>
+</config>

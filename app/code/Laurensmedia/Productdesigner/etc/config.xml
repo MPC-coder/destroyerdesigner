@@ -1,0 +1,36 @@
+<?xml version="1.0" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+	<default>
+		<lm_productdesigner>
+			<lm_pd_settings>
+				<lm_pd_imagewidth/>
+				<lm_pd_imageheight/>
+<!--
+				<lm_pd_imagewidthmedium/>
+				<lm_pd_imageheightmedium/>
+				<lm_pd_imagewidthfine/>
+				<lm_pd_imageheightfine/>
+				<lm_pd_imagedpi/>
+-->
+				<lm_pd_key/>
+			</lm_pd_settings>
+			<lm_pd_bulkexport>
+				<lm_pd_bulkexport_arrange/>
+				<lm_pd_bulkexport_emptyside/>
+				<lm_pd_bulkexport_width/>
+				<lm_pd_bulkexport_height/>
+				<lm_pd_bulkexport_verticalmargin/>
+				<lm_pd_bulkexport_horizontalmargin/>
+				<lm_pd_bulkexport_verticalmargin_between/>
+				<lm_pd_bulkexport_horizontalmargin_between/>
+			</lm_pd_bulkexport>
+		</lm_productdesigner>
+		<general>
+			<file>
+                <protected_extensions>
+                    <svg>svgIsAllowed</svg>
+                </protected_extensions>
+			</file>
+		</general>
+	</default>
+</config>

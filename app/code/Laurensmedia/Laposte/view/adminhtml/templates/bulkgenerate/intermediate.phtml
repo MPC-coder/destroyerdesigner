@@ -1,0 +1,39 @@
+<?php
+$orderIds = $block->getData('order_ids');
+$orderCollection = $block->getData('order_collection');
+$pdfUrl = $block->getData('pdf_url');
+?>
+<a href="<?php echo $pdfUrl; ?>" target="_blank">
+	<button class="action scalable primary">
+		<span><?php echo __("Download shipping labels (PDF)"); ?></span>
+	</button>
+</a>
+
+<br />
+<br />
+<br />
+
+<form action="<?php echo $this->getUrl('laposte/bulkgenerate/ship'); ?>" method="post" enctype="multipart/form-data">
+	<?php 
+	$objectManager = \Magento\Framework\App\ObjectManager::getInstance(); 
+	$FormKey = $objectManager->get('Magento\Framework\Data\Form\FormKey'); 
+	?>
+	<input name="form_key" type="hidden" value="<?php echo $FormKey->getFormKey();?>">
+	
+	<label for="order_ids">
+		<?php echo __("Select the orders you want to ship"); ?>
+	</label>
+	<br />
+	<select multiple="multiple" name="order_ids" id="order_ids">
+		<?php foreach($orderCollection as $order): ?>
+			<option value="<?php echo $order->getId(); ?>" selected="selected"><?php echo $order->getIncrementId(); ?></option>
+		<?php endforeach; ?>
+	</select>
+	
+	<br />
+	<br />
+	
+	<button class="action scalable primary" type="submit">
+		<span><?php echo __("Create shipments"); ?></span>
+	</button>
+</form>

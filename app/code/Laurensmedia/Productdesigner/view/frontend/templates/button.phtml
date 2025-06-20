@@ -1,0 +1,9 @@
+<?php
+$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+$registry = $objectManager->get('Magento\Framework\Registry');
+$productId = $registry->registry('product')->getId();
+$product = $objectManager->create('Magento\Catalog\Model\Product')->load($productId);
+?>
+<?php if($product->getData('bedrukbaar')): ?>
+	<div class="action primary open-product-designer" style="cursor:pointer; display:none;"><span><?php echo __("Je personnalise ce produit (open designer)"); ?></span></div>
+<?php endif; ?>

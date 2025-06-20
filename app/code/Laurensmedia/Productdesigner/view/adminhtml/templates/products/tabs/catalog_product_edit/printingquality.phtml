@@ -1,0 +1,33 @@
+<?php
+$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+$mediaUrl = $objectManager->create('\Magento\Store\Model\StoreManagerInterface')->getStore()->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA);
+$f = $this->getRequest()->getParam('id');
+$tel = "1";
+$druktypes = $objectManager->create('Laurensmedia\Productdesigner\Model\ResourceModel\Printingquality\Collection')
+	->addFieldToFilter('product_id', $f);
+if($this->getRequest()->getParam('store') > 0){
+	$druktypes->addFieldToFilter('store_id', $this->getRequest()->getParam('store'));
+} else {
+	$druktypes->addFieldToFilter('store_id', array('null' => true));
+}
+$druktypes->load();
+?>
+
+<button id="drukaddbutton" type="button" class="scalable"><span>Add Printing Quality</span></button>
+<br /><br />
+<div id="druktypelijst">
+
+<?php
+	foreach($druktypes as $druktype){
+		echo "<div id=\"druktypeitem_$tel\">";
+		echo "Title: <input type=\"text\" name=\"druktype_$tel\" value=\"" . $druktype['name'] . "\" /> Surcharge: <input type=\"text\" name=\"druktypemeerprijs_$tel\" value=\"" . $druktype['meerprijs'] . "\" />";
+		echo " <button id=\"del_$tel\" type=\"button\" class=\"scalable delete deletedruktype\"><span>Delete</span></button>";
+		echo "<br /><br />";
+		echo '</div>';
+		$tel++;
+	}
+	echo "<input type=\"hidden\" name=\"druktypecounter\" id=\"druktypecounter\" value=\"$tel\" />";
+
+?>
+
+</div>

@@ -1,0 +1,91 @@
+<?xml version="1.0" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+	<system>
+		<tab id="laurensmedia" sortOrder="999" translate="label">
+			<label>Laurens Media</label>
+		</tab>
+		<section id="lm_productdesigner" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label">
+			<label>Product Designer</label>
+			<tab>laurensmedia</tab>
+			<resource>Laurensmedia_Productdesigner::config_laurensmedia_productdesigner</resource>
+			<group id="lm_pd_settings" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label">
+				<label>Settings</label>
+<!--
+				<field id="lm_pd_columns" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="1" translate="label" type="text">
+					<label>Number of columns (1-12) for Product Designer on product page</label>
+					<comment/>
+				</field>
+-->
+				<field id="lm_pd_imagewidth" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="text">
+					<label>Minimal image width for image uploaded by customer</label>
+					<comment/>
+				</field>
+				<field id="lm_pd_imageheight" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="text">
+					<label>Minimal image height for image uploaded by customer</label>
+					<comment/>
+				</field>
+				<field id="lm_pd_imagewidthmedium" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="text">
+					<label>Medium image width (for notices only)</label>
+					<comment/>
+				</field>
+				<field id="lm_pd_imageheightmedium" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="text">
+					<label>Medium image height (for notices only)</label>
+					<comment/>
+				</field>
+				<field id="lm_pd_imagewidthfine" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="text">
+					<label>Good image width (for notices only)</label>
+					<comment/>
+				</field>
+				<field id="lm_pd_imageheightfine" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="text">
+					<label>Good image height (for notices only)</label>
+					<comment/>
+				</field>
+				<field id="lm_pd_imagedpi" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="text">
+					<label>Minimum DPI value of an uploaded image</label>
+					<comment/>
+				</field>
+				<field id="lm_pd_key" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="text">
+					<label>Enter your license key</label>
+					<comment/>
+				</field>
+			</group>
+			<group id="lm_pd_bulkexport" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label">
+				<label>Bulk export default settings</label>
+				<field id="lm_pd_bulkexport_arrange" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="select">
+					<label>How to arrange the PDF?</label>
+					<comment/>
+					<source_model>Laurensmedia\Productdesigner\Model\Config\Source\Bulkexportarrange</source_model>
+				</field>
+				<field id="lm_pd_bulkexport_emptyside" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="select">
+					<label>What if a product side is not designed?</label>
+					<comment/>
+					<source_model>Laurensmedia\Productdesigner\Model\Config\Source\Bulkexportemptyside</source_model>
+				</field>
+				<field id="lm_pd_bulkexport_width" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="text">
+					<label>PDF width in mm?</label>
+					<comment/>
+				</field>
+				<field id="lm_pd_bulkexport_height" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="text">
+					<label>PDF height in mm?</label>
+					<comment/>
+				</field>
+				<field id="lm_pd_bulkexport_verticalmargin" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="text">
+					<label>PDF margin(top and bottom) in mm?</label>
+					<comment/>
+				</field>
+				<field id="lm_pd_bulkexport_horizontalmargin" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="text">
+					<label>PDF margin(left and right) in mm?</label>
+					<comment/>
+				</field>
+				<field id="lm_pd_bulkexport_verticalmargin_between" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="text">
+					<label>PDF margin between items(top and bottom) in mm?</label>
+					<comment/>
+				</field>
+				<field id="lm_pd_bulkexport_horizontalmargin_between" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="text">
+					<label>PDF margin between items(left and right) in mm?</label>
+					<comment/>
+				</field>
+			</group>
+		</section>
+	</system>
+</config>

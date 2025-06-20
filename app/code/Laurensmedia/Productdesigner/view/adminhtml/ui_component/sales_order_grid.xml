@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<listing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <listingToolbar name="listing_top">
+            <massaction name="listing_massaction">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="component" xsi:type="string">Magento_Ui/js/grid/tree-massactions</item>
+                    </item>
+                </argument>
+                <action name="bulkexport">
+                    <settings>
+                        <actions class="Laurensmedia\Productdesigner\Ui\Component\MassAction\Bulkexport"/>
+                        <type>bulkexport</type>
+                        <label translate="true">Product Designer - bulk export</label>
+                    </settings>
+                </action>
+            </massaction>
+    </listingToolbar>
+    <columns name="sales_order_columns">
+        <column name="custom_info_labels" class="Laurensmedia\Productdesigner\Ui\Component\Listing\Column\Custom">
+            <settings>
+                <label translate="true">Custom info</label>
+                <bodyTmpl>ui/grid/cells/html</bodyTmpl>
+                <sortable>false</sortable>
+            </settings>
+        </column>
+    </columns>
+</listing>

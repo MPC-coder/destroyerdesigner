@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="2columns-right" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <head>
+		<css src="Laurensmedia_Productdesigner::css/smoothness/jquery-ui-1.8.16.custom.css"/>
+		<css src="Laurensmedia_Productdesigner::css/productdesigner.css"/>
+		<css src="Laurensmedia_Productdesigner::css/productdesigner/bootstrap.css"/>
+		<css src="Laurensmedia_Productdesigner::css/productdesigner/jquery.selectBoxIt.css"/>
+
+        <script src="Laurensmedia_Productdesigner::js/jquery.selectBoxIt.min.js"/>
+        <script src="Laurensmedia_Productdesigner::js/productdesigner.js"/>
+    </head>
+	<body>
+		<referenceContainer name="content">
+			<block 
+			    class="Laurensmedia\Productdesigner\Block\Index" 
+			    name="productdesigner" 
+			    template="Laurensmedia_Productdesigner::index.phtml"
+				cacheable="false">
+				<block class="Laurensmedia\Productdesigner\Block\Designer" name="tools_font" template="Laurensmedia_Productdesigner::tools_font.phtml" />
+				<block class="Laurensmedia\Productdesigner\Block\Designer" name="font_editor" template="Laurensmedia_Productdesigner::font_editor.phtml" />
+				<block class="Laurensmedia\Productdesigner\Block\Designer" name="library" template="Laurensmedia_Productdesigner::library.phtml" />
+			</block>
+		</referenceContainer>
+		<referenceContainer name="sidebar.main">
+			<block class="Magento\Cms\Block\Block" name="designer_right">
+				<arguments>
+					<argument name="block_id" xsi:type="string">hoe_werkt_het</argument>
+				</arguments>
+			</block>
+		</referenceContainer>
+	</body>
+</page>

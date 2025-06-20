@@ -1,0 +1,10 @@
+<?php
+/** @var $block \Magento\Framework\View\Element\Template */
+$product = $block->getLayout()->getBlock('product.info')->getProduct();
+$imageUrl = $block->getViewFileUrl('Magento_Catalog::images/product/placeholder/image.jpg'); // fallback
+
+if ($product && $product->getImage()) {
+    $imageUrl = $block->getUrl('media/catalog/product') . $product->getImage();
+}
+?>
+<link rel="preload" as="image" href="<?= $block->escapeUrl($imageUrl) ?>" />

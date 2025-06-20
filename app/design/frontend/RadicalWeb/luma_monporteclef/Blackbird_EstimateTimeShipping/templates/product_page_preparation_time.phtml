@@ -1,0 +1,67 @@
+<?php
+/** @var \Magento\Catalog\Block\Product\View $block */
+$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+$cart = $objectManager->get('\Magento\Checkout\Model\Cart');
+$quote = clone $cart->getQuote();
+$product    = $objectManager->get('\Magento\Catalog\Api\ProductRepositoryInterface')->get($block->getProduct()->getSku());
+$qty = 1;
+for ($i = 0; $i < $qty; $i++) {
+	$quote->addProduct($product);
+}
+$quote->collectTotals();
+
+$shippingDate = $objectManager->get('\Blackbird\EstimateTimeShipping\Helper\Data')->getEstimatedDateByProduct($product, $quote);
+
+$shippingTimeRules = $objectManager->get('\Blackbird\EstimateTimeShipping\Model\ResourceModel\ShippingTimeRule\CollectionFactory')->create()
+	->addFieldToSelect('shipping_time_rule_id')
+	->addFieldToFilter('is_active', true)
+	->getData();
+
+/** Check if rules are matching for current product(s) and cart */
+$i = 0;
+$hasCartMatched = false;
+while ($i < count($shippingTimeRules) && !$hasCartMatched) {
+	$rule           = $objectManager->get('\Blackbird\EstimateTimeShipping\Api\ShippingTimeRuleRepositoryInterface')->getById($shippingTimeRules[$i]['shipping_time_rule_id']);
+	$hasCartMatched = $rule->isQuoteMatching($quote);
+	if ($hasCartMatched) {
+		$isDelivery   = true;
+		$shippingDate = $rule->getEstimatedShippingTime($shippingDate);
+	}
+	$i++;
+}
+
+if ($shippingDate) {
+	$dateDiff = date_diff($shippingDate, $objectManager->get('\Magento\Framework\Stdlib\DateTime\TimezoneInterface')->date());
+	$preparationDays = round($dateDiff->y * 365.25 + $dateDiff->m * 30 + $dateDiff->d + $dateDiff->h / 24 + $dateDiff->i / 60);
+	$shippingDate = ($shippingDate) ? $objectManager->get('\Magento\Framework\Stdlib\DateTime\TimezoneInterface')->formatDate($shippingDate, $objectManager->get('\Blackbird\EstimateTimeShipping\Helper\Data')->getDateFormat()) : null;
+}
+
+$displayIfNotExist = $objectManager->get('\Blackbird\EstimateTimeShipping\Helper\Data')->getDisplayIfNoDate();
+$message = '';
+if ($shippingDate === null) {
+	$message = __($objectManager->get('\Blackbird\EstimateTimeShipping\Helper\Data')->getNoDateMessages());
+} else {
+	if ($objectManager->get('\Blackbird\EstimateTimeShipping\Helper\Data')->getHowToDisplay()) {
+		if ($isDelivery) {
+			$message = __($objectManager->get('\Blackbird\EstimateTimeShipping\Helper\Data')->getOrderDeliveryDateMessages(), $shippingDate);
+		} else {
+			$message = __($objectManager->get('\Blackbird\EstimateTimeShipping\Helper\Data')->getOrderShippingDateMessages(), $shippingDate);
+		}
+	} else {
+		if ($isDelivery) {
+			$message = __($objectManager->get('\Blackbird\EstimateTimeShipping\Helper\Data')->getProductDeliveryDateMessages(), $shippingDate);
+		} else {
+			$message = __($objectManager->get('\Blackbird\EstimateTimeShipping\Helper\Data')->getProductShippingDateMessages(), $shippingDate);
+		}
+	}
+}
+?>
+<div id="preparation-time" class="message edd-date success"><?php echo $message; ?></div>
+<script type="text/x-magento-init">
+	{
+		"*": {
+			"dateForm": {"divId": "#preparation-time", "type": "product", "currentSku": "<?= $block->getProduct()->getSku(); ?>"}
+		}
+	}
+
+</script>

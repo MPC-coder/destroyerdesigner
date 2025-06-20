@@ -1,0 +1,33 @@
+<?php
+$values = \Laurensmedia\Productdesigner\Block\Adminhtml\Products\Grid::getValueArray2();
+$currentValues = array();
+
+$id = $this->getRequest()->getParam('id');
+$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+$sides = $objectManager->create('Laurensmedia\Productdesigner\Model\ResourceModel\Products\Collection')
+	->addFieldToFilter('product_id', $id);
+if($this->getRequest()->getParam('store') > 0){
+	$sides->addFieldToFilter('store_id', $this->getRequest()->getParam('store'));
+} else {
+	$sides->addFieldToFilter('store_id', array('null' => true));
+}
+
+$firstSide = $sides->getFirstItem();
+$currentValues = explode(',', (string)$firstSide->getGroup());
+?>
+<div class="admin__field field field-group " data-ui-id="productdesigner-products-edit-tab-groups-fieldset-element-form-field-group">
+	<label class="label admin__field-label" for="page_group" data-ui-id="productdesigner-products-edit-tab-groups-fieldset-element-select-group-label"><span>Product Groups</span></label>
+    <div class="admin__field-control control">
+		<select id="page_group" name="group[]" title="Product Groups" size="10" class=" select multiselect admin__control-multiselect" data-ui-id="productdesigner-products-edit-tab-groups-fieldset-element-select-group" multiple="multiple">
+			<?php foreach($values as $value): ?>
+				<?php
+					$selected = '';
+					if(in_array($value['value'], $currentValues)){
+						$selected = 'selected="selected"';
+					}
+				?>
+				<option value="<?php echo $value['value']; ?>" <?php echo $selected; ?>><?php echo $value['label']; ?></option>
+			<?php endforeach; ?>
+		</select>
+	</div>
+</div>

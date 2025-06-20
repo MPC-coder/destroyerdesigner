@@ -1,0 +1,27 @@
+<?php
+$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+$textcolors = explode(',', $objectManager->create('Laurensmedia\Productdesigner\Model\ResourceModel\Textcolors\Collection')
+	->addFieldToFilter('product_id', $this->getRequest()->getParams('id'))
+	->getLastItem()
+	->getColors());
+$tel = "1";
+?>
+
+<button id="textcoloraddbutton" type="button" class="scalable"><span>Add text color</span></button>
+<br /><br />
+<div id="textcolorlijst">
+
+<?php
+	foreach($textcolors as $textcolor){
+		echo "<div id=\"textcolorsitem_$tel\">";
+		echo '<input type="text" name="textcolors_'.$tel.'" class="textcolorpicker" value="'.$textcolor.'" style="background-color:'.$textcolor.';" />';
+		echo " <button id=\"del_$tel\" type=\"button\" class=\"scalable delete deletetextcolor\"><span>Delete</span></button>";
+		echo "<br /><br />";
+		echo '</div>';
+		$tel++;
+	}
+	echo "<input type=\"hidden\" name=\"textcolorscounter\" id=\"textcolorscounter\" value=\"$tel\" />";
+
+?>
+
+</div>

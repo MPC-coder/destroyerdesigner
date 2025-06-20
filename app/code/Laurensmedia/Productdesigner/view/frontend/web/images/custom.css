@@ -1,0 +1,126 @@
+.fpd-topbar .fpd-navigation{
+	display: flex;
+/* 	display: block; */
+	height: auto;
+	background: #eb5800;
+}
+
+.fpd-topbar .fpd-navigation > div{
+    float: left;
+    display: inline-block;
+    padding: 0 5px;
+    width: calc(33% - 10px);
+}
+.fpd-topbar .fpd-navigation>div>.fpd-label{
+	font-size: 12px;
+	white-space: normal;
+	float: left;
+	clear: both;
+	width: 100%;
+	line-height: normal;
+	margin-bottom: 7px;
+}
+.fpd-topbar .fpd-navigation>div>span{
+	line-height: 50px;
+	font-size: 23px;
+}
+
+fpd-views-inside-left .fpd-views-selection {
+    right: 5px;
+}
+
+.fpd-views-selection{
+/*
+	margin-left: 30px;
+	margin-top: 50px;
+*/
+	margin-top: 10px;
+	position: relative;
+}
+.fpd-views-selection>.fpd-item,
+.fpd-views-selection .fpd-item:last-child{
+	float: left;
+	margin: 5px !important;
+}
+.fpd-container div.fpd-product-stage{
+	/*margin-top: 50px;*/
+	/*margin-bottom: 100px;*/
+	margin-right: 40px;
+}
+.fpd-draggable-dialog{
+	top: 20%;
+}
+.fpd-actions-wrapper.fpd-pos-left{
+	float: left;
+	position: relative;
+	width: 100%;
+	clear: both;
+	top: 0;
+	left: 0;
+	margin: 10px 0;
+}
+.fpd-actions-wrapper.fpd-pos-left > .fpd-action-btn{
+    float: left;
+    margin: 5px;
+    line-height: 35px;
+}
+.designer-product-shop{
+	margin-left: 0 !important;
+}
+.fpd-views-selection>.fpd-item>picture{
+	background-size: 100% auto;
+}
+.fpd-layouts-panel .fpd-grid .fpd-item>picture{
+	background-size: contain;
+}
+/*
+.fpd-views-inside-left .fpd-views-selection {
+    bottom: 15px;
+    right: 5px;
+    display: inline !important;
+}
+*/
+.designer-product-shop > .fpd-container .fpd-views-selection{
+	float: left;
+	margin-top: 15px;
+	margin-right: 5px;
+}
+.designer-product-shop > .fpd-container .fpd-topbar{
+	background: none;
+}
+.designer-product-shop > .fpd-container{
+	outline: none;
+}
+.fpd-views-selection .surcharge{
+	position: absolute;
+	bottom: 5px;
+}
+.designer-product-shop>.fpd-container.fullwidth{
+	float: left;
+    height: 230px;
+}
+.designer-product-shop>.fpd-container.fullwidth .fpd-views-selection{
+    width: 100%;
+    clear: both;
+    padding: 10px;
+}
+.designer-product-shop>.fpd-container.fullwidth .fpd-topbar{
+	float: left;
+	width: 100%;
+}
+.designer-product-shop>.fpd-container.fullwidth .fpd-topbar .fpd-navigation{
+	float: left;
+}
+
+@media screen and (max-width: 768px){
+	.designer-product-shop > .fpd-container .fpd-views-selection{
+		width: 100%;
+		margin-bottom: 7px;
+	}
+	.designer-product-shop > .fpd-container .fpd-topbar{
+		clear: both;
+	}
+	.product-view .grid12-6{
+		margin-bottom: 0;
+	}
+}

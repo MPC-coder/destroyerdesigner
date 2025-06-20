@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="admin-2columns-left" xsi:noNamespaceSchemaLocation="../../../../../../../lib/internal/Magento/Framework/View/Layout/etc/page_configuration.xsd">
+    <head>
+        <css src="jquery/fileUploader/css/jquery.fileupload-ui.css"/>
+        <css src="Laurensmedia_Productdesigner::css/colorpicker.css"/>
+        <css src="Laurensmedia_Productdesigner::css/productdesigner.css"/>
+        <script src="Laurensmedia_Productdesigner::js/catalog_product_edit/editproduct.js"/>
+    </head>
+</page>
