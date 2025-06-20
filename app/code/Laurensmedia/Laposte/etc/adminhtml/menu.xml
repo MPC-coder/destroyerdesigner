@@ -1,8 +1,0 @@
-<?xml version="1.0" ?>
-<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
-	<menu>
-		<add id="Laurensmedia::top_level" title="Laurens Media" module="Laurensmedia_Laposte" sortOrder="20" resource="Magento_Backend::content"/>
-		<add id="Laurensmedia::laposte_top" title="La Poste" module="Laurensmedia_Laposte" sortOrder="30" resource="Magento_Backend::content" parent="Laurensmedia::top_level" />
-		<add id="Laurensmedia_Laposte::laurensmedia_laposte_codes" title="La Poste codes" module="Laurensmedia_Laposte" sortOrder="9999" resource="Magento_Backend::content" parent="Laurensmedia::laposte_top" action="laurensmedia_laposte/codes/index"/>
-	</menu>
-</config>
